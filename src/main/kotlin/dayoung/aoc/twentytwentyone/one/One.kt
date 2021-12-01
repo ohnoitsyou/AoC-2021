@@ -1,7 +1,7 @@
 package dayoung.aoc.twentytwentyone.one
 
 class One {
-  private val input = this::class.java.getResourceAsStream("/one.txt")!!.bufferedReader().readLines().map(String::toInt)
+  private val input = this::class.java.getResource("/one.txt")!!.readText().split("\n").map(String::toInt)
   private fun part1(): Int =
     input.windowed(2).count { (first: Int, second: Int) -> second > first }
 
