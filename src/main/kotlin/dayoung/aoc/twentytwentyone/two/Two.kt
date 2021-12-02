@@ -1,38 +1,37 @@
 package dayoung.aoc.twentytwentyone.two
 
-fun List<String>.toInstruction(): List<Pair<String, Int>> {
+data class Submarine(val x: Int, val y: Int, val dy: Int) {
+    fun value() = this.x * this.y
+}
+data class Instruction(val dir: String, val value: Int)
+
+fun List<String>.toInstruction(): List<Instruction> {
     return this.map {
-        Pair(it.substringBefore(" "), it.substringAfter(" ").toInt())
+        Instruction(it.substringBefore(" "), it.substringAfter(" ").toInt())
     }
 }
 
 class Two {
     private val input = this::class.java.getResourceAsStream("/two.txt")!!.bufferedReader().readLines().toInstruction()
-    private fun part1(): Int {
-        var pos = Pair(0,0)
-        for(direction in input) {
-            pos = when(direction.first) {
-                "forward" -> Pair(pos.first + direction.second, pos.second)
-                "up", -> Pair(pos.first, pos.second - direction.second)
-                "down" -> Pair(pos.first, pos.second + direction.second)
-                else -> pos
+    private fun part1(): Int =
+        input.fold(Submarine(0,0,0)) { sub, direction ->
+            when (direction.dir) {
+                "forward" -> sub.copy(x = sub.x + direction.value)
+                "up", -> sub.copy(y = sub.y - direction.value)
+                "down" -> sub.copy(y = sub.y + direction.value)
+                else -> sub
             }
-        }
-        return pos.first * pos.second
-    }
+        }.value()
 
-    private fun part2(): Int {
-        var pos = Pair(0, 0)
-        var aim = 0
-        for(direction in input) {
-            when(direction.first) {
-                "forward" -> pos = Pair(pos.first + direction.second, pos.second + (aim * direction.second))
-                "up" -> aim -= direction.second
-                "down" -> aim += direction.second
+    private fun part2(): Int =
+        input.fold(Submarine(0,0,0)) { sub, direction ->
+            when (direction.dir) {
+                "forward" -> sub.copy(x = sub.x + direction.value, y = sub.y + (sub.dy * direction.value))
+                "up" -> sub.copy(dy = sub.dy - direction.value)
+                "down" -> sub.copy(dy = sub.dy + direction.value)
+                else -> sub
             }
-        }
-        return pos.first * pos.second
-    }
+        }.value()
 
     fun solve(): Pair<Int, Int> =
         Pair(part1(), part2())
