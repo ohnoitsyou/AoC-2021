@@ -1,6 +1,7 @@
 package dayoung.aoc.twentytwentyone
 
 import dayoung.aoc.twentytwentyone.one.One
+import dayoung.aoc.twentytwentyone.two.Two
 
 fun main() {
     TwentyTwentyOne.solve()
@@ -11,9 +12,9 @@ class TwentyTwentyOne {
         fun solve() {
             val (d1p1, d1p2) = One().solve()
             println("Day 1:\n\tPart 1: $d1p1\n\tPart 2: $d1p2")
-            /*
             val (d2p1, d2p2) = Two().solve()
-            println("Day 2:\n\tPart 1: $d1p1\n\tPart 2: $d1p2")
+            println("Day 2:\n\tPart 1: $d2p1\n\tPart 2: $d2p2")
+            /*
             val (d3p1, d3p2) = Two().solve()
             println("Day 3:\n\tPart 1: $d1p1\n\tPart 2: $d1p2")
             val (d4p1, d4p2) = Two().solve()
